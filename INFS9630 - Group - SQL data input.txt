@@ -1,0 +1,302 @@
+drop table census.addresses
+drop table census.assignments
+drop table census.employees
+drop table census.regions
+drop table census.residentaddress
+drop table census.residents
+
+CREATE SCHEMA census
+GO
+
+CREATE TABLE census.Residents(
+	ResidentID INT  PRIMARY KEY,
+	FirstName VARCHAR(256) NOT NULL,
+	MiddleName VARCHAR(256) NULL,
+	LastName VARCHAR(256) NOT NULL,
+	DoB VARCHAR(256) NOT NULL,
+	Sex VARCHAR(256) NOT NULL,
+	Race VARCHAR(256) NOT NULL
+)
+GO
+
+CREATE TABLE census.Regions(
+	RegionID INT  PRIMARY KEY,
+	RegionDesc VARCHAR(512) NOT NULL
+)
+GO
+
+CREATE TABLE census.Employees(
+	EmployeeID INT  PRIMARY KEY,
+	FirstName VARCHAR(256) NOT NULL,
+	LastName VARCHAR(256) NOT NULL,
+	Position VARCHAR(256) NOT NULL,
+	Salary VARCHAR(256) NOT NULL,
+	ManagerID INT
+)
+GO
+
+CREATE TABLE census.Addresses(
+	AddressID INT  PRIMARY KEY,
+	Number VARCHAR(128) NOT NULL,
+	Street VARCHAR(256) NOT NULL,
+	City VARCHAR(256) NOT NULL,
+	State VARCHAR(256) NOT NULL,
+	ZipCode VARCHAR(256) NOT NULL,
+	RegionID INT NOT NULL FOREIGN KEY REFERENCES census.Regions (RegionID)
+)
+GO
+
+CREATE TABLE census.Assignments(
+	EmployeeID INT NOT NULL FOREIGN KEY REFERENCES census.Employees (EmployeeID),
+	RegionID INT NOT NULL FOREIGN KEY REFERENCES census.Regions (RegionID),
+	PRIMARY KEY(EmployeeID, RegionID)
+)
+GO
+
+CREATE TABLE census.ResidentAddress(
+	ResidentID INT NOT NULL FOREIGN KEY REFERENCES census.Residents (ResidentID),
+	AddressID INT NOT NULL FOREIGN KEY REFERENCES census.Addresses (AddressID),
+	ResidentStatus VARCHAR(256) NULL, --Owner/Rentor/Resident/etc
+	PRIMARY KEY (ResidentID, AddressID)
+)
+GO
+
+
+INSERT INTO census.Residents VALUES ('1','Darlene','Jodi','Schmidt','01/04/1987','F','American Indian or Alaska Native')
+INSERT INTO census.Residents VALUES ('2','Samuel','Georgia','Delgado','01/23/1985','M','American Indian or Alaska Native')
+INSERT INTO census.Residents VALUES ('3','Kara','Troy','Richardson','07/04/2013','F','American Indian or Alaska Native')
+INSERT INTO census.Residents VALUES ('4','Gene','Sylvester','Garrett','05/08/2011','M','American Indian or Alaska Native')
+INSERT INTO census.Residents VALUES ('5','Woodrow','Amber','Paul','06/06/1966','M','White')
+INSERT INTO census.Residents VALUES ('6','Alvin','Noel','Holt','06/25/1964','M','Asian')
+INSERT INTO census.Residents VALUES ('7','Jeffrey','Megan','Miles','07/15/1962','M','White')
+INSERT INTO census.Residents VALUES ('8','Maggie','Kim','Hansen','08/03/1960','F','White')
+INSERT INTO census.Residents VALUES ('9','Loren','Eduardo','Casey','04/23/1985','F','White')
+INSERT INTO census.Residents VALUES ('10','Enrique','Cesar','Lloyd','12/2/2018','M','White')
+INSERT INTO census.Residents VALUES ('11','Ollie','George','Daniels','12/21/2016','M','White')
+INSERT INTO census.Residents VALUES ('12','Ken','Maryann','Roy','9/11/1977','M','Black or African American')
+INSERT INTO census.Residents VALUES ('13','Glenn','Archie','Fletcher','10/1/1975','M','Black or African American')
+INSERT INTO census.Residents VALUES ('14','Roy','Nathan','Sanders','4/19/1999','M','Black or African American')
+INSERT INTO census.Residents VALUES ('15','Debra','Christina','Jacobs','5/8/1997','F','Black or African American')
+INSERT INTO census.Residents VALUES ('16','Adam','Felicia','Singleton','5/28/1995','M','Native Hawaiian or Other Pacific Islander')
+INSERT INTO census.Residents VALUES ('17','Kenny','Rafael','Carr','6/16/1993','M','White')
+INSERT INTO census.Residents VALUES ('18','Maxine','Melvin','Houston','5/28/1995','F','White')
+INSERT INTO census.Residents VALUES ('19','Victoria','Madeline','Adams','6/16/1993','F','White')
+INSERT INTO census.Residents VALUES ('20','Fredrick','Tabitha','Patton','7/6/1991','M','White')
+INSERT INTO census.Residents VALUES ('21','Edmund','Sherri','Quinn','7/25/1989','M','Black or African American')
+INSERT INTO census.Residents VALUES ('22','Jared','Travis','Nelson','8/14/1987','M','White')
+INSERT INTO census.Residents VALUES ('23','Naomi','Sarah','Wells','9/2/1985','F','White')
+INSERT INTO census.Residents VALUES ('24','Julian','Mona','Black','9/22/1983','M','American Indian or Alaska Native')
+INSERT INTO census.Residents VALUES ('25','Pat','Claudia','Estrada','10/11/1981','F','White')
+INSERT INTO census.Residents VALUES ('26','Connie','Dwight','Willis','7/29/2006','F','American Indian or Alaska Native')
+INSERT INTO census.Residents VALUES ('27','Samantha','Dolores','Gilbert','8/17/2004','F','American Indian or Alaska Native')
+INSERT INTO census.Residents VALUES ('28','Bobbie','Devin','Daniel','9/6/2002','F','American Indian or Alaska Native')
+INSERT INTO census.Residents VALUES ('29','Vera','Neil','Day','9/25/2000','F','American Indian or Alaska Native')
+INSERT INTO census.Residents VALUES ('30','Veronica','Krista','Lamb','12/30/1997','F','Asian')
+INSERT INTO census.Residents VALUES ('31','Delia','Ramon','Newman','1/19/1996','F','Asian')
+INSERT INTO census.Residents VALUES ('32','Marlene','Rosalie','Jimenez','2/7/1994','F','Asian')
+INSERT INTO census.Residents VALUES ('33','Andrew','Jeannie','Caldwell','2/27/1992','M','Asian')
+INSERT INTO census.Residents VALUES ('34','Alfred','Shawna','Bowers','3/18/1990','M','Asian')
+INSERT INTO census.Residents VALUES ('35','Virgil','Tasha','Munoz','4/6/1988','M','Black or African American')
+INSERT INTO census.Residents VALUES ('36','Renee','Agnes','Wong','4/26/1986','F','Black or African American')
+INSERT INTO census.Residents VALUES ('37','Sabrina','Leigh','Rowe','5/15/1984','F','Black or African American')
+INSERT INTO census.Residents VALUES ('38','Nathan','Marco','West','6/4/1982','M','Black or African American')
+INSERT INTO census.Residents VALUES ('39','Guadalupe','Clifford','Fernandez','6/23/1980','F','Black or African American')
+INSERT INTO census.Residents VALUES ('40','Melvin','Paul','Hughes','11/21/2010','M','Black or African American')
+INSERT INTO census.Residents VALUES ('41','Ruben','Jackie','Scott','8/30/55','M','White')
+INSERT INTO census.Residents VALUES ('42','Ana','Amos','Benson','8/23/88','F','White')
+INSERT INTO census.Residents VALUES ('43','Melanie','Bernice','Parker','9/12/86','F','White')
+INSERT INTO census.Residents VALUES ('44','Jennie','Rachel','Lindsey','10/1/84','F','White')
+INSERT INTO census.Residents VALUES ('45','Jenna','Hannah','Wheeler','1/31/1959','F','White')
+INSERT INTO census.Residents VALUES ('46','Wilbur','Javier','Patterson','1/11/1961','M','White')
+INSERT INTO census.Residents VALUES ('47','Stacey','Gertrude','Johnson','12/23/1962','M','White')
+INSERT INTO census.Residents VALUES ('48','Verna','Carole','Maldonado','12/3/1964','F','White')
+INSERT INTO census.Residents VALUES ('49','Kyle','Genevieve','Pierce','11/14/1966','M','White')
+INSERT INTO census.Residents VALUES ('50','Laurie','Wilson','Logan','10/25/1968','F','Asian')
+INSERT INTO census.Residents VALUES ('51','Faith','Vivian','Holloway','10/6/1970','F','Asian')
+INSERT INTO census.Residents VALUES ('52','Lynne','Inez','Robinson','9/16/1972','F','Asian')
+INSERT INTO census.Residents VALUES ('53','Angel','Arlene','Holland','8/28/1974','M','Asian')
+INSERT INTO census.Residents VALUES ('54','Irene','Gina','Nash','8/8/1976','F','White')
+INSERT INTO census.Residents VALUES ('55','Ricardo','Marlon','Johnston','7/20/1978','M','White')
+INSERT INTO census.Residents VALUES ('56','Heidi','Kayla','Goodman','9/16/1988','F','White')
+INSERT INTO census.Residents VALUES ('57','Ida','Lillie','Kelley','8/28/1990','F','White')
+INSERT INTO census.Residents VALUES ('58','Lee','Lee','Garcia','5/11/2017','M','White')
+INSERT INTO census.Residents VALUES ('59','Jane','Lula','Woods','4/22/2019','F','White')
+INSERT INTO census.Residents VALUES ('60','Julio','Charlotte','Hernandez','12/31/1962','M','White')
+INSERT INTO census.Residents VALUES ('61','Luis','Toni','Rice','12/11/1964','M','White')
+INSERT INTO census.Residents VALUES ('62','Calvin','Dale','Reyes','11/22/1966','M','White')
+INSERT INTO census.Residents VALUES ('63','Simon','Mitchell','Medina','11/2/1968','M','White')
+INSERT INTO census.Residents VALUES ('64','Christie','Roland','Fowler','10/14/1970','F','White')
+INSERT INTO census.Residents VALUES ('65','Theodore','Emily','Holmes','6/1/1969','M','White')
+INSERT INTO census.Residents VALUES ('66','Alison','Lucy','Nunez','6/21/1967','F','White')
+INSERT INTO census.Residents VALUES ('67','Becky','Clayton','Ramos','7/10/1965','F','Black or African American')
+INSERT INTO census.Residents VALUES ('68','Charlotte','Kerry','Yates','7/30/1963','F','Black or African American')
+INSERT INTO census.Residents VALUES ('69','Tammy','Mercedes','Flores','8/18/1961','F','Black or African American')
+INSERT INTO census.Residents VALUES ('70','Elsie','Gordon','Larson','3/8/1981','F','Black or African American')
+INSERT INTO census.Residents VALUES ('71','Drew','Kristine','Horton','3/28/1979','M','Black or African American')
+INSERT INTO census.Residents VALUES ('72','Elisa','Jack','Mullins','4/16/1977','F','Black or African American')
+INSERT INTO census.Residents VALUES ('73','Rudolph','Wade','Conner','5/6/1975','M','Black or African American')
+INSERT INTO census.Residents VALUES ('74','Dale','Terence','Ross','5/25/1973','M','Black or African American')
+INSERT INTO census.Residents VALUES ('75','Cindy','Brent','Vasquez','6/14/1971','F','Black or African American')
+INSERT INTO census.Residents VALUES ('76','Leroy','Shane','Summers','9/12/1990','M','Asian')
+INSERT INTO census.Residents VALUES ('77','Patti','Rodney','Weaver','10/1/1988','F','Asian')
+INSERT INTO census.Residents VALUES ('78','George','Pat','Torres','2/13/2018','M','Asian')
+INSERT INTO census.Residents VALUES ('79','Danny','Mable','Campbell','3/4/2016','M','Asian')
+INSERT INTO census.Residents VALUES ('80','Abel','Chelsea','Cooper','3/24/2014','M','Asian')
+INSERT INTO census.Residents VALUES ('81','Robin','Garry','Lopez','5/18/1990','M','Asian')
+INSERT INTO census.Residents VALUES ('82','Sadie','Shelly','Douglas','6/6/1988','F','White')
+INSERT INTO census.Residents VALUES ('83','Morris','Jerry','Keller','6/26/1986','M','White')
+INSERT INTO census.Residents VALUES ('84','Regina','Denise','Hunter','3/3/1991','F','White')
+INSERT INTO census.Residents VALUES ('85','Bobby','Kevin','Malone','2/11/1993','M','White')
+INSERT INTO census.Residents VALUES ('86','Clayton','Lowell','Leonard','3/3/1991','M','White')
+INSERT INTO census.Residents VALUES ('87','Wilson','Pauline','Wright','3/22/1989','M','White')
+INSERT INTO census.Residents VALUES ('88','Shawna','Jacqueline','Griffith','4/11/1987','F','White')
+INSERT INTO census.Residents VALUES ('89','Brent','Joshua','Mack','4/30/1985','M','White')
+INSERT INTO census.Residents VALUES ('90','Jordan','Tony','Payne','5/20/1983','F','White')
+INSERT INTO census.Residents VALUES ('91','Jacob','Gwendolyn','Dixon','6/8/1981','M','White')
+INSERT INTO census.Residents VALUES ('92','Sheila','Marcus','Wagner','7/17/2017','F','White')
+INSERT INTO census.Residents VALUES ('93','Sylvia','Elvira','George','7/17/2017','F','White')
+INSERT INTO census.Residents VALUES ('94','Darin','Amy','Love','7/17/2017','M','White')
+INSERT INTO census.Residents VALUES ('95','Jackie','Miriam','Copeland','9/10/1993','F','White')
+INSERT INTO census.Residents VALUES ('96','Herbert','Estelle','Williamson','9/30/1991','M','White')
+INSERT INTO census.Residents VALUES ('97','Marc','Joseph','Santos','10/19/1989','M','White')
+INSERT INTO census.Residents VALUES ('98','Zachary','Shelia','Owen','11/8/1987','M','White')
+INSERT INTO census.Residents VALUES ('99','Jasmine','Audrey','Gill','11/27/1985','F','White')
+INSERT INTO census.Residents VALUES ('100','Wilma','Blake','Miller','12/17/1983','F','White')
+select * from census.Residents
+
+INSERT INTO census.Regions VALUES ('1','Toledo East')
+INSERT INTO census.Regions VALUES ('2','Toledo West')
+INSERT INTO census.Regions VALUES ('3','Oregon')
+INSERT INTO census.Regions VALUES ('4','Perrysburg East')
+INSERT INTO census.Regions VALUES ('5','Perrysburg West')
+INSERT INTO census.Regions VALUES ('6','Sylvania North')
+INSERT INTO census.Regions VALUES ('7','Sylvania South')
+INSERT INTO census.Regions VALUES ('8','Maumee East')
+INSERT INTO census.Regions VALUES ('9','Maumee West')
+INSERT INTO census.Regions VALUES ('10','Toledo North')
+INSERT INTO census.Regions VALUES ('11','Toledo South')
+
+INSERT INTO census.Employees VALUES ('1','Audrey','Valencia','Canvasser','60000','21')
+INSERT INTO census.Employees VALUES ('2','Etta','Howells','Canvasser','61000','21')
+INSERT INTO census.Employees VALUES ('3','Zoha','Kemp','Canvasser','50000','21')
+INSERT INTO census.Employees VALUES ('4','Ayaan','Pennington','Canvasser','50000','21')
+INSERT INTO census.Employees VALUES ('5','Dan','Bryant','Canvasser','50000','21')
+INSERT INTO census.Employees VALUES ('6','Elouise','Maldonado','Canvasser','55000','21')
+INSERT INTO census.Employees VALUES ('7','Vishal','Potts','Canvasser','59000','21')
+INSERT INTO census.Employees VALUES ('8','Nada','Price','Canvasser','60000','21')
+INSERT INTO census.Employees VALUES ('9','Parris','Hume','Canvasser','58000','21')
+INSERT INTO census.Employees VALUES ('10','Miley','Moss','Canvasser','55000','21')
+INSERT INTO census.Employees VALUES ('11','Neive','Salgado','HR Representative','35000','23')
+INSERT INTO census.Employees VALUES ('12','Olivia','Sutton','HR Representative','40000','23')
+INSERT INTO census.Employees VALUES ('13','Daisy-Mae','Krueger','HR Representative','42000','23')
+INSERT INTO census.Employees VALUES ('14','Flora','Sandoval','HR Representative','45000','23')
+INSERT INTO census.Employees VALUES ('15','Leonard','Rutledge','HR Representative','40000','23')
+INSERT INTO census.Employees VALUES ('16','Kirsty','Cherry','IT Analyst','50000','22')
+INSERT INTO census.Employees VALUES ('17','Shaquille','Justice','IT Analyst','60000','22')
+INSERT INTO census.Employees VALUES ('18','Ted','Odom','IT Analyst','66000','22')
+INSERT INTO census.Employees VALUES ('19','Libbi','Watkins','IT Analyst','59000','22')
+INSERT INTO census.Employees VALUES ('20','Ayra','Whitney','IT Analyst','62000','22')
+INSERT INTO census.Employees VALUES ('21','Akeem','Holland','Canvasser - Supervisor','75000','24')
+INSERT INTO census.Employees VALUES ('22','Yunus','Sloan','IT - Supervisor','76000','24')
+INSERT INTO census.Employees VALUES ('23','Ivor','Ratcliffe','HR - Supervisor','56000','24')
+INSERT INTO census.Employees VALUES ('24','Kyla','Kenny','Director','120000','')
+select * from census.Employees
+
+INSERT INTO census.Addresses VALUES ('1','11855','Monroe Street','Toledo','OH','43623','2')
+INSERT INTO census.Addresses VALUES ('2','657E','Secor Avenue','Toledo','OH','43621','1')
+INSERT INTO census.Addresses VALUES ('3','659A','Secor Avenue','Toledo','OH','43621','1')
+INSERT INTO census.Addresses VALUES ('4','1092','Central Ave','Toledo','OH','43621','1')
+INSERT INTO census.Addresses VALUES ('5','11223','Eckel Junction Road','Perrysburg','OH','43551','5')
+INSERT INTO census.Addresses VALUES ('6','59227','Five Points Road','Perrysburg','OH','43551','5')
+INSERT INTO census.Addresses VALUES ('7','891','East South Boundary Road','Perrysburg','OH','43551','4')
+INSERT INTO census.Addresses VALUES ('8','897','East South Boundary Road','Perrysburg','OH','43551','4')
+INSERT INTO census.Addresses VALUES ('9','9667','River Road','Perrysburg','OH','43551','4')
+INSERT INTO census.Addresses VALUES ('10','1727','River Road','Perrysburg','OH','43551','5')
+INSERT INTO census.Addresses VALUES ('11','8855','Alpha Street','Oregon','OH','43110','3')
+INSERT INTO census.Addresses VALUES ('12','2975','Bravo Street','Oregon','OH','43110','3')
+INSERT INTO census.Addresses VALUES ('13','11511','Charlie Street','Oregon','OH','43110','3')
+INSERT INTO census.Addresses VALUES ('14','2940','Delta Street','Oregon','OH','43110','3')
+INSERT INTO census.Addresses VALUES ('15','9122','Holland-Sylvania Road','Sylvania','OH','43600','7')
+INSERT INTO census.Addresses VALUES ('16','63111','McCord Road','Sylvania','OH','43600','7')
+INSERT INTO census.Addresses VALUES ('17','63221','McCord Road','Sylvania','OH','43600','6')
+INSERT INTO census.Addresses VALUES ('18','732F','Sylvania Avenue','Sylvania','OH','43600','6')
+INSERT INTO census.Addresses VALUES ('19','891D','Sylvania Avenue','Sylvania','OH','43600','6')
+INSERT INTO census.Addresses VALUES ('20','228A','Sylvania Avenue','Sylvania','OH','43600','6')
+INSERT INTO census.Addresses VALUES ('21','9527','Central Ave','Sylvania','OH','43601','7')
+INSERT INTO census.Addresses VALUES ('22','7747','Central Ave','Sylvania','OH','43601','7')
+INSERT INTO census.Addresses VALUES ('23','61142','Holland-Sylvania Road','Sylvania','OH','43601','7')
+INSERT INTO census.Addresses VALUES ('24','8873','Ford Street','Maumee','OH','43537','9')
+INSERT INTO census.Addresses VALUES ('25','92551','Reynolds Road','Maumee','OH','43537','9')
+INSERT INTO census.Addresses VALUES ('26','672H','Reynolds Road','Maumee','OH','43537','8')
+INSERT INTO census.Addresses VALUES ('27','688A','Reynolds Road','Maumee','OH','43537','8')
+INSERT INTO census.Addresses VALUES ('28','612B','Reynolds Road','Maumee','OH','43537','8')
+INSERT INTO census.Addresses VALUES ('29','7879','Zulu Drive','Maumee','OH','43539','8')
+INSERT INTO census.Addresses VALUES ('30','4461','Zulu Drive','Maumee','OH','43539','8')
+INSERT INTO census.Addresses VALUES ('31','1449','Yankee Road','Maumee','OH','43539','9')
+
+INSERT INTO census.Assignments VALUES ('1','1')
+INSERT INTO census.Assignments VALUES ('2','1')
+INSERT INTO census.Assignments VALUES ('3','2')
+INSERT INTO census.Assignments VALUES ('4','2')
+INSERT INTO census.Assignments VALUES ('5','3')
+INSERT INTO census.Assignments VALUES ('6','3')
+INSERT INTO census.Assignments VALUES ('7','4')
+INSERT INTO census.Assignments VALUES ('8','5')
+INSERT INTO census.Assignments VALUES ('9','2')
+INSERT INTO census.Assignments VALUES ('10','5')
+
+
+
+INSERT INTO census.ResidentAddress VALUES ('1','1','Self')
+INSERT INTO census.ResidentAddress VALUES ('2','1','Spouse')
+INSERT INTO census.ResidentAddress VALUES ('3','1','Child')
+INSERT INTO census.ResidentAddress VALUES ('4','1','Child')
+INSERT INTO census.ResidentAddress VALUES ('5','2','Self')
+INSERT INTO census.ResidentAddress VALUES ('6','3','Self')
+INSERT INTO census.ResidentAddress VALUES ('7','4','Self')
+INSERT INTO census.ResidentAddress VALUES ('8','4','Self')
+INSERT INTO census.ResidentAddress VALUES ('9','5','Self')
+INSERT INTO census.ResidentAddress VALUES ('10','5','Spouse')
+INSERT INTO census.ResidentAddress VALUES ('11','5','Child')
+INSERT INTO census.ResidentAddress VALUES ('12','6','Self')
+INSERT INTO census.ResidentAddress VALUES ('13','6','Spouse')
+INSERT INTO census.ResidentAddress VALUES ('14','6','Child')
+INSERT INTO census.ResidentAddress VALUES ('15','7','Self')
+INSERT INTO census.ResidentAddress VALUES ('16','8','Self')
+INSERT INTO census.ResidentAddress VALUES ('17','9','Self')
+INSERT INTO census.ResidentAddress VALUES ('18','9','Spouse')
+INSERT INTO census.ResidentAddress VALUES ('19','10','Self')
+INSERT INTO census.ResidentAddress VALUES ('20','10','Spouse')
+INSERT INTO census.ResidentAddress VALUES ('21','11','Self')
+INSERT INTO census.ResidentAddress VALUES ('22','12','Self')
+INSERT INTO census.ResidentAddress VALUES ('23','13','Self')
+INSERT INTO census.ResidentAddress VALUES ('24','14','Spouse')
+INSERT INTO census.ResidentAddress VALUES ('25','14','Self')
+INSERT INTO census.ResidentAddress VALUES ('26','14','Child')
+INSERT INTO census.ResidentAddress VALUES ('27','14','Child')
+INSERT INTO census.ResidentAddress VALUES ('28','14','Child')
+INSERT INTO census.ResidentAddress VALUES ('29','14','Child')
+INSERT INTO census.ResidentAddress VALUES ('30','15','Self')
+INSERT INTO census.ResidentAddress VALUES ('31','16','Self')
+INSERT INTO census.ResidentAddress VALUES ('32','17','Self')
+INSERT INTO census.ResidentAddress VALUES ('33','18','Self')
+INSERT INTO census.ResidentAddress VALUES ('34','19','Self')
+INSERT INTO census.ResidentAddress VALUES ('35','20','Self')
+INSERT INTO census.ResidentAddress VALUES ('36','20','Self')
+INSERT INTO census.ResidentAddress VALUES ('37','20','Self')
+INSERT INTO census.ResidentAddress VALUES ('38','21','Self')
+INSERT INTO census.ResidentAddress VALUES ('39','21','spouse')
+INSERT INTO census.ResidentAddress VALUES ('40','22','Self')
+INSERT INTO census.ResidentAddress VALUES ('41','23','Self')
+INSERT INTO census.ResidentAddress VALUES ('42','23','Spouse')
+INSERT INTO census.ResidentAddress VALUES ('43','24','Self')
+INSERT INTO census.ResidentAddress VALUES ('44','24','Brother')
+INSERT INTO census.ResidentAddress VALUES ('45','24','Mother')
+INSERT INTO census.ResidentAddress VALUES ('46','25','Self')
+INSERT INTO census.ResidentAddress VALUES ('47','26','Self')
+INSERT INTO census.ResidentAddress VALUES ('48','26','Self')
+INSERT INTO census.ResidentAddress VALUES ('49','27','Self')
+INSERT INTO census.ResidentAddress VALUES ('50','28','Self')
+INSERT INTO census.ResidentAddress VALUES ('51','29','Self')
+INSERT INTO census.ResidentAddress VALUES ('52','30','Self')
+INSERT INTO census.ResidentAddress VALUES ('53','31','Self')
